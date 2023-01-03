@@ -1,13 +1,16 @@
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, Image} from 'react-native';
 import useGoogleLogin from './hooks/useGoogleLogin';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from '../Navigation/Navigation';
+import { CDN_URL } from '../../config';
+import WrapHorizontal from '../animated/WrapHorizontal';
+import { styles } from "./styles";
 
 const Login: React.FC = () => {
 
-  const { isLoading, isSignedIn, handleGoogleLogin } = useGoogleLogin();
+  const { isLoading, isSignedIn, handleGoogleLogin, isErrored } = useGoogleLogin();
   const navigation = useNavigation<NavigationProps>();
 
   const loggedIn = () => {
@@ -21,9 +24,14 @@ const Login: React.FC = () => {
     <View style={styles.login}>
       <SafeAreaView />
       <Text style={styles.loginHeader}>Login.</Text>
-
-      <View style={styles.spacer}></View>
-      <View style={styles.oAuthContainer}>
+      <WrapHorizontal startingValue={-160} customStyle={styles.loginAnimatedImageContainer}>
+        <Image source={{uri: `${CDN_URL}/zamboni-icon.png`}}  style={styles.loginAnimatedImage} />
+      </WrapHorizontal>
+      <View style={styles.loginSpacer}></View>
+      <View style={styles.loginOAuthContainer}>
+        {isErrored && (
+          <Text style={styles.loginError}>There was an error logging in. Please try again.</Text>
+        )}
         <GoogleSigninButton 
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Dark}
@@ -34,32 +42,5 @@ const Login: React.FC = () => {
     </View>
   );
 };
-
-
-// react native stylesheet
-const styles = StyleSheet.create({
-  
-  login: {
-    flex: 1,
-    backgroundColor: "black",
-  },
-
-  loginHeader: {
-    color: "#686de0",
-    fontSize: 50,
-    fontWeight: "bold",
-    margin: 40
-  },
-
-  spacer: {
-    flex: 1,
-  },
-
-  oAuthContainer: {
-    alignItems: "center",
-    marginBottom: 150
-  }
-
-});
 
 export default Login;

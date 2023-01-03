@@ -6,9 +6,11 @@ const useGoogleLogin = () => {
 
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isErrored, setIsErrored] = useState<boolean>(false);
 
-  const handleGoogleLogin = (callbackFn?: () => void) => {
+  const handleGoogleLogin = (onSuccess?: () => void) => {
     setIsLoading(true);
+    setIsErrored(false);
     GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true})
     .then(() => {
       GoogleSignin.signIn()
@@ -19,20 +21,25 @@ const useGoogleLogin = () => {
           .then((response) => {
             setIsSignedIn(true);
             setIsLoading(false);
-            if (callbackFn) {
-              callbackFn();
+            if (onSuccess) {
+              onSuccess();
             }
-          }
-        )
+          })
+          .catch((error) => {
+            setIsSignedIn(false);
+            setIsLoading(false);
+            setIsErrored(true);
+          })
       })
       .catch((error) => {
         setIsSignedIn(false);
         setIsLoading(false);
+        setIsErrored(true);
       })
     })
   }
 
-  return { isLoading, isSignedIn, handleGoogleLogin };
+  return { isLoading, isSignedIn, handleGoogleLogin, isErrored };
 
 }
 
