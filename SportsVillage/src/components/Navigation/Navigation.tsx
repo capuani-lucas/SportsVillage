@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import auth from "@react-native-firebase/auth";
 import LoginComponent from "../Login";
-import TestComponent from "../Test";
+import BottomTabNavigator from "./components/BottomTabNavigator";
 
 export type RootStackParamList = {
   Login: undefined,
@@ -12,6 +12,8 @@ export type RootStackParamList = {
 }
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
+
+// see https://reactnavigation.org/docs/tab-based-navigation/
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Navigation: React.FC = () => {
@@ -23,7 +25,7 @@ const Navigation: React.FC = () => {
         initialRouteName={auth().currentUser ? "Test" : "Login"}
       >
         <Stack.Screen name="Login" component={LoginComponent} />
-        <Stack.Screen name="Test" component={TestComponent} />
+        <Stack.Screen name="Test" component={BottomTabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   )
@@ -31,3 +33,5 @@ const Navigation: React.FC = () => {
 }
 
 export default Navigation;
+
+
