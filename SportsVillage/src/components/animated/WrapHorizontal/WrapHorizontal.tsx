@@ -17,7 +17,7 @@ const WrapHorizontal: React.FC<INProps> = ({ children, startingValue, customStyl
     Animated.loop(
       Animated.timing(animated, {
         toValue: windowWidth,
-        duration: animationDuration || 14000,
+        duration: animationDuration || 10000,
         easing: Easing.linear,
         useNativeDriver: true
       })

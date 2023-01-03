@@ -24,7 +24,11 @@ const Login: React.FC = () => {
     <View style={styles.login}>
       <SafeAreaView />
       <Text style={styles.loginHeader}>Login.</Text>
-      <WrapHorizontal startingValue={-160} customStyle={styles.loginAnimatedImageContainer}>
+      <WrapHorizontal 
+        startingValue={-260}
+        animationDuration={17000}
+        customStyle={styles.loginAnimatedImageContainer}
+      >
         <Image source={{uri: `${CDN_URL}/zamboni-icon.png`}}  style={styles.loginAnimatedImage} />
       </WrapHorizontal>
       <View style={styles.loginSpacer}></View>
