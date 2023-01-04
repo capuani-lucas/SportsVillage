@@ -8,7 +8,8 @@ import BottomTabNavigator from "./components/BottomTabNavigator";
 
 export type RootStackParamList = {
   Login: undefined,
-  Test: undefined
+  Test: undefined,
+  Home: undefined
 }
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

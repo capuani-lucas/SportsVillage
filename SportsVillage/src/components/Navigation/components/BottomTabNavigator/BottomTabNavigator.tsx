@@ -9,6 +9,7 @@ import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import ShiftSchedule from "../../../ShiftSchedule";
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator: React.FC = () => {
@@ -29,7 +30,7 @@ const BottomTabNavigator: React.FC = () => {
     >
       <Tab.Screen 
         name="Home" 
-        component={TestComponent} 
+        component={ShiftSchedule} 
         options={{tabBarIcon: ({focused}) => <FontAwesomeIcon icon={faHouse} color={getFocusedColor(focused)}/>}} 
       />
       <Tab.Screen 
