@@ -1,14 +1,15 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../config";
 
 export const styles = StyleSheet.create({
   
   login: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: COLORS.background,
   },
 
   loginHeader: {
-    color: "#686de0",
+    color: COLORS.primary,
     fontSize: 50,
     fontWeight: "bold",
     margin: 40
@@ -31,11 +32,11 @@ export const styles = StyleSheet.create({
     height: 130,
     width: 130,
     resizeMode: "contain",
-    tintColor: "white"
+    tintColor: COLORS.opposing
   },
 
   loginError: {
-    color: "red",
+    color: COLORS.error,
   }
 
 });
