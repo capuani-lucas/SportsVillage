@@ -47,6 +47,8 @@ export const mergeSchedules = (scheduleData: ScheduleData[]): ScheduleInformatio
         }
         if (shift.shifts[index]) {
           scheduleInformation[date][shift.name] = shift.shifts[index];
+        } else if (scheduleInformation[date][shift.name]) { // if shift was removed from schedule, delete it
+          delete scheduleInformation[date][shift.name];
         }
       });
     });

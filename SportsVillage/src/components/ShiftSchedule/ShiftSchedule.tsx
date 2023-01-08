@@ -53,11 +53,11 @@ const mockData1: ScheduleData = {
 const mockData2: ScheduleData = {
     scheduleStart: "2023-01-05",
     scheduleEnd: "2023-01-08",
-    scheduleUploaded: "2022-12-30",
+    scheduleUploaded: "2023-01-02",
     shifts: [
       {
         name: "Lucas",
-        shifts: ['8-4', '8-7', '', '8-4']
+        shifts: ['', '8-7', '', '8-4']
       },
       {
         name: "Joe",
