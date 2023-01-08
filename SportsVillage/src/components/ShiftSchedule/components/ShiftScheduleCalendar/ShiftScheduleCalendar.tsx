@@ -2,24 +2,23 @@ import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
 import { DateData, MarkedDates } from "react-native-calendars/src/types";
 import { COLORS } from "../../../../config";
-import { getCurrentDateData } from "./service";
+import { ScheduleInformation } from "../../service/shiftScheduleService";
+import { getMarkedDates } from "./service";
 
-const ShiftScheduleCalendar: React.FC = () => {
+interface INProps {
+  selectedDate: DateData;
+  setSelectedDate: (dateData: DateData) => void;
+  user: string;
+  scheduleInformation: ScheduleInformation;
+}
 
-  const [selectedDate, setSelectedDate] = useState<DateData>(getCurrentDateData());
-  const getMarkedDates = (): MarkedDates => {
-    return {
-      [selectedDate?.dateString]: {
-        selected: true,
-        marked: true
-      }
-    }
-  }
+
+const ShiftScheduleCalendar: React.FC<INProps> = ({ selectedDate, setSelectedDate, user, scheduleInformation }) => {
 
   return (
     <Calendar
-      onDayPress={(d) => setSelectedDate(d)}
-      markedDates={getMarkedDates()}  
+      onDayPress={(dateData) => setSelectedDate(dateData)}
+      markedDates={getMarkedDates(selectedDate, scheduleInformation, user)}  
       theme={{
         backgroundColor: COLORS.secondary,
         calendarBackground: COLORS.secondary,
