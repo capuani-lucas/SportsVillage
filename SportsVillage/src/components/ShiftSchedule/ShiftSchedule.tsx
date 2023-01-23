@@ -4,6 +4,7 @@ import { DateData } from 'react-native-calendars';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ShiftScheduleCalendar from './components/ShiftScheduleCalendar';
 import ShiftScheduleQuickInfo from './components/ShiftScheduleQuickInfo';
+import ShiftScheduleScan from './components/ShiftScheduleScan';
 import ShiftScheduleWorking from './components/ShiftScheduleWorking';
 import { getCurrentDateData, mergeSchedules, ScheduleInformation } from './service/shiftScheduleService';
 
@@ -94,6 +95,7 @@ const ShiftSchedule: React.FC = () => {
           selectedDate={selectedDate} 
         />
       </ScrollView>
+      <ShiftScheduleScan />
     </View>
   );
 }
