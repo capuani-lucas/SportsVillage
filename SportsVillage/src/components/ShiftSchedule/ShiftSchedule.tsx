@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ShiftScheduleCalendar from './components/ShiftScheduleCalendar';
+import ShiftScheduleQuickInfo from './components/ShiftScheduleQuickInfo';
 import ShiftScheduleWorking from './components/ShiftScheduleWorking';
 import { getCurrentDateData, mergeSchedules, ScheduleInformation } from './service/shiftScheduleService';
 
@@ -73,8 +74,14 @@ const ShiftSchedule: React.FC = () => {
 
 
   return (
-    <View style={styles.test}>
+    <View style={styles.shiftSchedule}>
       <SafeAreaView />
+      <Text style={styles.header}>Shifts</Text>
+      <ShiftScheduleQuickInfo 
+          selectedDate={selectedDate} 
+          scheduleInformation={scheduleInformation} 
+          user={"Lucas"}
+      />
       <ScrollView>
         <ShiftScheduleCalendar 
           selectedDate={selectedDate} 
