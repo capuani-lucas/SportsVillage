@@ -3,13 +3,17 @@ import { COLORS } from "../../config";
 
 export const styles = StyleSheet.create({
 
-  test: {
+  shiftSchedule: {
     flex: 1,
     backgroundColor: COLORS.background
   },
 
-  test1: {
-    color: COLORS.primary
+  header: {
+    fontWeight: "bold",
+    fontSize: 34,
+    color: COLORS.opposing,
+    marginLeft: 10,
+    marginBottom: 10
   }
 
 });

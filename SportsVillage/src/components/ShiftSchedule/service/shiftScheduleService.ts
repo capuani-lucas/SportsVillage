@@ -11,7 +11,7 @@ export interface ScheduleInformation {
 export const getCurrentDateData = (): DateData => {
     const date = new Date();
     return {
-      dateString: date.toISOString().split('T')[0],
+      dateString: date.toLocaleDateString().split('/').join('-'),
       day: date.getDate(),
       month: date.getMonth(),
       timestamp: date.getTime(),
