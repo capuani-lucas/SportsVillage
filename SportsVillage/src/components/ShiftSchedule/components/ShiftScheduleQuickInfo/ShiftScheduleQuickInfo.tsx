@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { COLORS } from "../../../../config";
 
 import { faHockeyPuck } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { DateData } from "react-native-calendars";
 import { ScheduleInformation } from "../../service/shiftScheduleService";
 
+import { styles } from "./styles";
 interface INProps {
   selectedDate: DateData;
   user: string;
@@ -26,21 +27,6 @@ const ShiftScheduleQuickInfo: React.FC<INProps> = ({ selectedDate, user, schedul
   )
 }
 
-const styles = StyleSheet.create({
-  quickInfo: {
-    backgroundColor: COLORS.secondary,
-    padding: 16,
-    marginVertical: 10,
-    flexDirection: "row",
-  },
-  quickInfoText: {
-    color: COLORS.opposing,
-    fontWeight: "bold",
-  },
-  icon: {
-    marginRight: 15
-  }
-});
 
 export default ShiftScheduleQuickInfo;
 
