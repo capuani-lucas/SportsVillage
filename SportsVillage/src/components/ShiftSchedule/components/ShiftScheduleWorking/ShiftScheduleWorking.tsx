@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { DateData } from "react-native-calendars";
 import { styles } from "./styles";
 import DropFadeIn from "../../../animated/DropFadeIn";
-import { ScheduleInformation } from "../../service/shiftScheduleService";
+import { ScheduleInformation } from "../../types";
 
 
 interface INProps {
