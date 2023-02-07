@@ -1,6 +1,5 @@
 import { DateData } from "react-native-calendars";
-import { ScheduleData } from "../types";
-import { ScheduleInformation } from "../types";
+import { ScheduleData, ScheduleInformation } from "../types";
 
 export const getCurrentDateData = (): DateData => {
     const date = new Date();
@@ -14,12 +13,6 @@ export const getCurrentDateData = (): DateData => {
     }
 }
 
-// format toLocaleDateString() as yyyy-mm-dd
-export const formatDateString = (dateString: string): string => {
-  return dateString.split('/').join('-');
-}
-
-
 const generateDatesStringsBetweenDateSeconds = (startSeconds: number, endSeconds: number): string[] => {
   const dates: string[] = [];
   const currentDate = new Date(startSeconds * 1000);
@@ -31,7 +24,7 @@ const generateDatesStringsBetweenDateSeconds = (startSeconds: number, endSeconds
 }
 
 const sortScheduleData = (scheduleData: ScheduleData[]): ScheduleData[] => {
-  return scheduleData.sort((a, b) => new Date(a.scheduleUploaded.seconds * 1000).getTime() - new Date(b.scheduleUploaded.seconds * 1000).getTime());
+  return scheduleData.sort((a, b) => a.scheduleUploaded.seconds - b.scheduleUploaded.seconds);
 }
 
 // takes array of schedule data
