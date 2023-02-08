@@ -12,12 +12,12 @@ interface INProps {
 }
 
 const ShiftScheduleWorking: React.FC<INProps> = ({ scheduleInformation, selectedDate }) => {
-  const scheduleNames = Object.keys(scheduleInformation[selectedDate?.dateString] || {});
+  const scheduleNames = Object.keys(scheduleInformation[selectedDate?.dateString]?.shifts || {});
   return (
     <View>
       {
         scheduleNames.map((name, index) => {
-          const shift = scheduleInformation[selectedDate?.dateString][name];
+          const shift = scheduleInformation[selectedDate?.dateString]?.shifts[name];
           return (
             <DropFadeIn key={index} delay={0} animationDuration={300} updateOnReRender>
               <View style={styles.shift}>

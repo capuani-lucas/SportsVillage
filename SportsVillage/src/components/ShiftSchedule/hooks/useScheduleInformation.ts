@@ -2,8 +2,8 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from "@react-native-firebase/auth";
 import { useEffect, useState } from 'react';
-import { mergeSchedules } from '../service/shiftScheduleService';
-import { ScheduleData, ScheduleInformation } from '../types';
+import { ScheduleDayInformation, ScheduleInformation } from '../types';
+import { formatScheduleDayInformation } from '../service/shiftScheduleService';
 
 export const useScheduleInformation = () => {
 
@@ -15,17 +15,17 @@ export const useScheduleInformation = () => {
     const subscriber = firestore()
       .collection('UserData')
       .doc(auth().currentUser?.uid)
-      .collection("Schedules")
-      .orderBy("scheduleUploaded", "desc")
-      .limit(3)
+      .collection("ScheduleDays")
+      .orderBy("date", "desc")
+      .limit(30)
       .onSnapshot(querySnapshot => {
         if (!querySnapshot) {
           setLoading(false);
           return;
         }
         setScheduleInformation(
-          mergeSchedules(
-            querySnapshot.docs.map(documentSnapshot => documentSnapshot.data() as ScheduleData)
+          formatScheduleDayInformation(
+            querySnapshot.docs.map((documentSnapshot) => documentSnapshot.data() as ScheduleDayInformation)
           )
         );
         setLoading(false);

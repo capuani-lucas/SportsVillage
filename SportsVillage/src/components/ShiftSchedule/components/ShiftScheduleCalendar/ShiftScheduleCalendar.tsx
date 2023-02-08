@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Calendar } from "react-native-calendars";
-import { DateData, MarkedDates } from "react-native-calendars/src/types";
+import { DateData } from "react-native-calendars/src/types";
 import { COLORS } from "../../../../config";
 import { ScheduleInformation } from "../../types";
 import { getMarkedDates } from "./service";
