@@ -17,7 +17,7 @@ interface INProps {
 
 const ShiftScheduleQuickInfo: React.FC<INProps> = ({ selectedDate, user, scheduleInformation }) => {
   
-  const working = scheduleInformation[selectedDate.dateString]?.[user];
+  const working = scheduleInformation[selectedDate.dateString]?.shifts[user];
 
   return (
     <View style={styles.quickInfo}>
