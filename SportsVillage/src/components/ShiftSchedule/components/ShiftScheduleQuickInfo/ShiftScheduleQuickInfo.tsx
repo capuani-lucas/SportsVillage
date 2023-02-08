@@ -6,7 +6,7 @@ import { faHockeyPuck } from "@fortawesome/free-solid-svg-icons";
 import { faSmile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { DateData } from "react-native-calendars";
-import { ScheduleInformation } from "../../service/shiftScheduleService";
+import { ScheduleInformation } from "../../types";
 
 import { styles } from "./styles";
 interface INProps {
@@ -21,7 +21,10 @@ const ShiftScheduleQuickInfo: React.FC<INProps> = ({ selectedDate, user, schedul
 
   return (
     <View style={styles.quickInfo}>
-      <FontAwesomeIcon icon={working ? faHockeyPuck : faSmile} color={working ? COLORS.primary : "yellow"} style={styles.icon}/>
+      <FontAwesomeIcon 
+        icon={working ? faHockeyPuck : faSmile} 
+        color={working ? COLORS.primary : "yellow"} 
+        style={styles.icon}/>
       <Text style={styles.quickInfoText}>{working ? `Working ${working}` : "Not working today"}</Text>
     </View>
   )

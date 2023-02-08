@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Calendar } from "react-native-calendars";
 import { DateData, MarkedDates } from "react-native-calendars/src/types";
 import { COLORS } from "../../../../config";
-import { ScheduleInformation } from "../../service/shiftScheduleService";
+import { ScheduleInformation } from "../../types";
 import { getMarkedDates } from "./service";
 
 interface INProps {

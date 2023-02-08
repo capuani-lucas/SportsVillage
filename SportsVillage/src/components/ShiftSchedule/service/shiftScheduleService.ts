@@ -1,17 +1,11 @@
 import { DateData } from "react-native-calendars";
-import { ScheduleData } from "../ShiftSchedule";
-
-
-export interface ScheduleInformation {
-  [date: string]: {
-    [name: string]: string
-  }
-}
+import { ScheduleData, ScheduleInformation } from "../types";
 
 export const getCurrentDateData = (): DateData => {
     const date = new Date();
     return {
-      dateString: date.toLocaleDateString().split('/').join('-'),
+      // get datestring as yyyy-mm-dd
+      dateString: date.toLocaleDateString("en-CA").split('/').join('-'),
       day: date.getDate(),
       month: date.getMonth(),
       timestamp: date.getTime(),
@@ -19,10 +13,10 @@ export const getCurrentDateData = (): DateData => {
     }
 }
 
-const generateDatesStringsBetweenDateStrings = (startDate: string, endDate: string): string[] => {
+const generateDatesStringsBetweenDateSeconds = (startSeconds: number, endSeconds: number): string[] => {
   const dates: string[] = [];
-  const currentDate = new Date(startDate);
-  while (currentDate <= new Date(endDate)) {
+  const currentDate = new Date(startSeconds * 1000);
+  while (currentDate <= new Date(endSeconds * 1000)) {
     dates.push(currentDate.toISOString().split('T')[0]);
     currentDate.setDate(currentDate.getDate() + 1);
   }
@@ -30,7 +24,7 @@ const generateDatesStringsBetweenDateStrings = (startDate: string, endDate: stri
 }
 
 const sortScheduleData = (scheduleData: ScheduleData[]): ScheduleData[] => {
-  return scheduleData.sort((a, b) => new Date(a.scheduleUploaded).getTime() - new Date(b.scheduleUploaded).getTime());
+  return scheduleData.sort((a, b) => a.scheduleUploaded.seconds - b.scheduleUploaded.seconds);
 }
 
 // takes array of schedule data
@@ -39,7 +33,7 @@ const sortScheduleData = (scheduleData: ScheduleData[]): ScheduleData[] => {
 export const mergeSchedules = (scheduleData: ScheduleData[]): ScheduleInformation => {
   const scheduleInformation: ScheduleInformation = {};
   sortScheduleData(scheduleData).forEach((schedule) => {
-    const dates = generateDatesStringsBetweenDateStrings(schedule.scheduleStart, schedule.scheduleEnd);
+    const dates = generateDatesStringsBetweenDateSeconds(schedule.scheduleStart.seconds, schedule.scheduleEnd.seconds);
     dates.forEach((date, index) => {
       schedule.shifts.forEach((shift) => {
         if (!scheduleInformation[date]) {
