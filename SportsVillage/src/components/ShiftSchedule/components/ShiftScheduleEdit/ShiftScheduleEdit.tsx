@@ -1,7 +1,7 @@
 
 import BottomSheet from "@gorhom/bottom-sheet";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Keyboard } from "react-native";
 import { ShiftEdit } from "../../types";
 import useEditScheduleShift from "./hooks/useEditScheduleShift";
 import { styles } from "./styles";
@@ -49,32 +49,34 @@ const ShiftScheduleEdit: React.FC<INProps> = ({ editing, setEditing, user }) => 
       handleIndicatorStyle={styles.bottomSheetHandleIndicator}
       onChange={handleChange}
     >
-      <View style={{flex: 1}}>
-        <TextInput 
-          style={styles.editInput}
-          value={textValue}
-          placeholder="Shift hours"
-          placeholderTextColor={"#666"}
-          onChangeText={setTextValue}
-        />
-        <TextInput 
-          style={styles.notesInput}
-          placeholder="Notes"
-          value={notesValue}
-          placeholderTextColor={"#666"}
-          multiline
-          onChangeText={setNotesValue}
-        />
-        <View style={styles.spacer}></View>
-        {editing?.shift && (
-          <TouchableOpacity style={styles.deleteButton} onPress={() => {
-            deleteShift(editing?.date, user);
-            handleClose();
-          }} >
-            <Text>Delete</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.bottomSheetEdit}>
+          <TextInput 
+            style={styles.editInput}
+            value={textValue}
+            placeholder="Shift hours"
+            placeholderTextColor={"#666"}
+            onChangeText={setTextValue}
+          />
+          <TextInput 
+            style={styles.notesInput}
+            placeholder="Notes"
+            value={notesValue}
+            placeholderTextColor={"#666"}
+            multiline
+            onChangeText={setNotesValue}
+          />
+          <View style={styles.spacer}></View>
+          {editing?.shift && (
+            <TouchableOpacity style={styles.deleteButton} onPress={() => {
+              deleteShift(editing?.date, user);
+              handleClose();
+            }} >
+              <Text>Delete</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
     </BottomSheet>
   );
 };

@@ -3,6 +3,10 @@ import { COLORS } from "../../../../config";
  
 export const styles = StyleSheet.create({
 
+  bottomSheetEdit: {
+    flex: 1
+  },
+
   editInput: {
     backgroundColor: COLORS.background,
     margin: 10,
