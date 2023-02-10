@@ -29,4 +29,7 @@ export const formatScheduleDayInformation = (scheduleData: ScheduleDayInformatio
   , {} as ScheduleInformation);
 }
 
-
+export const createDateAtMidnight = (date: string) => {
+    const dateArray = date.split("-");
+    return new Date(parseInt(dateArray[0]), parseInt(dateArray[1]) - 1, parseInt(dateArray[2]));
+}
