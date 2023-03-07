@@ -20,3 +20,9 @@ export type ScheduleDayInformation = {
     [name: string]: string
   }
 }
+
+export type ShiftEdit = {
+  date: string;
+  shift: string;
+  notes: string;
+}
