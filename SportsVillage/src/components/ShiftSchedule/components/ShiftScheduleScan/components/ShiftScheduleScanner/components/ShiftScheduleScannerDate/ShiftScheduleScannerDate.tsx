@@ -10,16 +10,18 @@ type ShiftScheduleScannerDateProps = {
   completeStep: () => void;
   selectedDate?: DateData;
   setSelectedDate: (dateData: DateData) => void;
+  firstSelectedDate?: DateData;
 }
 
 
-const ShiftScheduleScannerDate: React.FC<ShiftScheduleScannerDateProps> = ({ firstDay, completeStep, selectedDate, setSelectedDate }) => {
+const ShiftScheduleScannerDate: React.FC<ShiftScheduleScannerDateProps> = ({ firstDay, completeStep, selectedDate, setSelectedDate, firstSelectedDate }) => {
 
   return (
     <View>
       <Text style={styles.title}>{firstDay ? "First day of schedule?": "Last day of schedule?"}</Text>
       <View style={styles.calendarWrapper}>
         <Calendar 
+          minDate={firstSelectedDate?.dateString}
           onDayPress={(date: DateData) => {
             completeStep();
             setSelectedDate(date);
@@ -37,7 +39,8 @@ const ShiftScheduleScannerDate: React.FC<ShiftScheduleScannerDateProps> = ({ fir
             monthTextColor: COLORS.opposing,
             arrowColor: COLORS.primary,
             todayTextColor: COLORS.primary,
-            selectedDayBackgroundColor: COLORS.primary
+            selectedDayBackgroundColor: COLORS.primary,
+            textDisabledColor: COLORS.secondary,
           }}
         />
       </View>

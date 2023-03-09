@@ -5,6 +5,7 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 type SwapOutProps = {
   components: React.ReactNode[];
   ref: any;
+  startIndex?: number;
 }
 
 type SwapOutMethods = {
@@ -36,7 +37,7 @@ type SwapOutMethods = {
 
 const SwapOut = forwardRef<SwapOutMethods, SwapOutProps>((props, ref) => {
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(props.startIndex || 0);
 
   const windowWidth = Dimensions.get('window').width;
   const animated = useRef(new Animated.Value(0)).current;

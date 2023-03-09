@@ -1,70 +1,88 @@
 
-import React, { useRef, useState } from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { ActivityIndicator, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "src/config";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { useNavigation } from "@react-navigation/native";
-import { NavigationProps } from "src/components/Navigation/Navigation";
-import { DateData } from "react-native-calendars";
+
 import SwapOut from "src/components/animated/SwapOut";
 import ShiftScheduleScannerDate from "./components/ShiftScheduleScannerDate";
 import ShiftScheduleScannerInformation from "./components/ShiftScheduleScannerInformation";
 import ShiftScheduleScannerImage from "./components/ShiftScheduleScannerImage";
+import useScheduleScanner from "./hooks/useScheduleScanner";
 
 import { styles } from "./styles";
+import ShiftScheduleScannerName from "./components/ShiftScheduleScannerName";
 
 const ShiftScheduleScanner: React.FC = () => {
 
-  const [completedSteps, setCompletedSteps] = useState(1);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [firstSelectedDate, setFirstSelectedDate] = useState<DateData>();
-  const [secondSelectedDate, setSecondSelectedDate] = useState<DateData>();
-  const navigation = useNavigation<NavigationProps>();
-  const ref = useRef<any>(null);
-  
-  
-  const handleClick = (goBack: boolean) => {
-    if (currentIndex === 0 && goBack)
-      return navigation.goBack();
-    setCurrentIndex(currentIndex + (goBack ? -1 : 1));
-    ref.current && ref.current.animateOut(goBack);
-  }
-
-  const increaseCompletedSteps = () => {
-    setCompletedSteps(completedSteps + 1);
-  }
+  const {     
+    completedSteps, 
+    currentIndex, 
+    firstSelectedDate, 
+    secondSelectedDate, 
+    imageData, 
+    scheduleData, 
+    loading, 
+    userPreferences,
+    error, 
+    ref, 
+    methods 
+  } = useScheduleScanner();
 
   const components = [
     <ShiftScheduleScannerInformation />,
     <ShiftScheduleScannerDate 
       firstDay 
-      completeStep={increaseCompletedSteps}
+      completeStep={methods.increaseCompletedSteps}
       selectedDate={firstSelectedDate}
-      setSelectedDate={setFirstSelectedDate}
+      setSelectedDate={methods.setFirstSelectedDate}
     />,
     <ShiftScheduleScannerDate 
-      completeStep={increaseCompletedSteps}
+      completeStep={methods.increaseCompletedSteps}
+      firstSelectedDate={firstSelectedDate}
       selectedDate={secondSelectedDate}
-      setSelectedDate={setSecondSelectedDate}
+      setSelectedDate={methods.setSecondSelectedDate}
     />,
-    <ShiftScheduleScannerImage />
+    <ShiftScheduleScannerImage 
+      completeStep={methods.increaseCompletedSteps}
+      imageData={imageData}
+      setImageData={methods.setImageData}
+    />,
+    <ShiftScheduleScannerName 
+      parseSchedule={methods.parseSchedule}
+      scheduleData={scheduleData}
+      userPreferences={userPreferences}
+      updateUserPreferences={methods.updateUserPreferences}
+      error={error}
+      completeStep={methods.increaseCompletedSteps}
+    />,
+    
   ]
 
   const nextDisabled = completedSteps < currentIndex + 1;
-
   return (
     <View style={styles.scannerPage}>
       <SafeAreaView style={{flex: 1}}>
-        <TouchableOpacity onPress={() => handleClick(true)} style={styles.backButton}>
+        <TouchableOpacity onPress={() => methods.handleClick(true)} style={styles.backButton}>
           <FontAwesomeIcon icon={faArrowLeft} color={COLORS.opposing}/>
         </TouchableOpacity>
-        <SwapOut 
-          components={components}
-          ref={ref}
-        />
+        {error && (
+          <View style={styles.errorBanner}>
+            <Text style={styles.errorMessage}>An error has occurred. Please go back and try again.</Text>
+          </View>
+        )}
+        {loading ? (
+          <ActivityIndicator size="large" color={COLORS.primary} style={styles.loadingSpinner} />
+        ) : (
+          <SwapOut 
+            startIndex={currentIndex}
+            components={components}
+            ref={ref}
+          />
+        )}
         <TouchableOpacity 
-          onPress={() => handleClick(false)} 
+          onPress={() => methods.handleClick(false)} 
           style={[styles.nextButton, {backgroundColor: nextDisabled ? COLORS.secondary : COLORS.primary}]}
           disabled={nextDisabled}
         >

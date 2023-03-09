@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dimensions, Image, TouchableOpacity, View } from "react-native"
+import { Alert, Dimensions, Image, Linking, TouchableOpacity, View } from "react-native"
 import { faCamera, faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { COLORS } from "src/config";
@@ -7,56 +7,56 @@ import VerticalSpacer from "src/components/common/VerticalSpacer";
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { styles } from "./styles";
+import { ImageData } from "../../types";
 
-const ShiftScheduleScannerImage: React.FC = () => {
+type ShiftScheduleScannerImageProps = {
+  setImageData: (imageData: ImageData) => void;
+  completeStep: () => void;
+  imageData: ImageData;
+}
 
-  const [imagePath, setImagePath] = useState<string>();
+const ShiftScheduleScannerImage: React.FC<ShiftScheduleScannerImageProps> = ({ setImageData, completeStep, imageData }) => {
+
   const windowWidth = Dimensions.get('window').width;
 
-  const createFormData = (photo: any, body: any) => {
-    const data = new FormData();
-
-    data.append("image", {
-      name: photo.filename,
-      type: photo.mime,
-      uri: `file://${photo.path}`
-    });
-
-    Object.keys(body).forEach(key => {
-      data.append(key, body[key]);
-    });
-
-    return data;
+  const createSettingsAlert = (message: string) => {
+    Alert.alert(
+      "No permission",
+      message,
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => Linking.openSettings() }
+      ],
+      { cancelable: false }
+    );
   }
 
-  const makeRequest = (photo: any) => {
-  fetch("http://192.168.2.119:3000/getScheduleData", {
-    method: "POST",
-    body: createFormData(photo, {})
-  })
-    .then(response => response.json())
-    .then(response => {
-      console.log("upload succes", response);
-    })
-    .catch(error => {
-      console.log("upload error", error);
-    });
-  }
-
-  const chooseImagePicker = (choice: string) => {
-    return choice === "camera" ? ImagePicker.openCamera : ImagePicker.openPicker;
-  }
+  const chooseImagePicker = (choice: string) => choice === "camera" ? ImagePicker.openCamera : ImagePicker.openPicker;
   const openImagePicker = (choice: "camera" | "gallery") => {
     chooseImagePicker(choice)({
       forceJpg: true,
       mediaType: 'photo'
     })
     .then(image => {
-      console.log(image);
-      setImagePath(image.path);
-      // makeRequest(image);
+      setImageData(
+        {
+          uri: `file://${image.path}`,
+          type: image.mime,
+          name: image.filename || ""
+        }
+      )
+      completeStep();
     })
-    .catch(err => {
+    .catch((err: string) => {
+      if (err == "Error: User did not grant camera permission.") {
+        createSettingsAlert("Please go to settings and allow the app to use your camera.");
+      }
+      if (err == "Error: User did not grant library permission.") {
+        createSettingsAlert("Please go to settings and allow the app to use your photo library");
+      }
       console.log(err);
     })
   }
@@ -65,12 +65,12 @@ const ShiftScheduleScannerImage: React.FC = () => {
   return (
     <View style={{flex: 1}}>
       <View style={[styles.imageContainer, {width: windowWidth, height: windowWidth}]}>
-        {imagePath ? (
+        {imageData.uri ? (
           <Image 
-            source={{uri: `file://${imagePath}`}} 
+            source={{uri: imageData.uri}} 
             style={{width: windowWidth, height: windowWidth}} 
-            resizeMode="contain"/
-          >
+            resizeMode="contain"
+          />
         ) : (
           <FontAwesomeIcon icon={faCamera} color={COLORS.background} size={30}/>
         )}

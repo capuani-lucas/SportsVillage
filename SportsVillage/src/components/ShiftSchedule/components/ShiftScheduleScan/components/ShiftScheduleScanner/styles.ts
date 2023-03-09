@@ -19,6 +19,21 @@ export const styles = StyleSheet.create({
     margin: 16,
     borderRadius: 10,
     alignItems: "center"
+  },
+
+  loadingSpinner: {
+    flex: 1
+  },
+
+  errorBanner: {
+    backgroundColor: COLORS.error,
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
+  }, 
+
+  errorMessage: {
+    color: COLORS.opposing,
   }
 
 });
