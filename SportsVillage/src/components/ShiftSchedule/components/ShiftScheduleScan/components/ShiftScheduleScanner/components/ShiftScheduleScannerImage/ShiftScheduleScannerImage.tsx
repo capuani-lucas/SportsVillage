@@ -64,8 +64,12 @@ const ShiftScheduleScannerImage: React.FC = () => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={styles.imageContainer}>
-        <Image source={{uri: `file://${imagePath}`}} style={{width: windowWidth, height: windowWidth}} resizeMode="contain"/>
+      <View style={[styles.imageContainer, {width: windowWidth, height: windowWidth}]}>
+        {imagePath ? (
+          <Image source={{uri: `file://${imagePath}`}} style={{width: windowWidth, height: windowWidth}} resizeMode="contain"/>
+        ) : (
+          <FontAwesomeIcon icon={faCamera} color={COLORS.background} size={30}/>
+        )}
       </View>
       <VerticalSpacer  />
       <View style={styles.imageSelectors}>
@@ -85,14 +89,16 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     backgroundColor: COLORS.secondary,
-    marginTop: 20
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   cameraPicker: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: COLORS.primary,
-    marginLeft: 15,
+    marginLeft: 16,
     padding: 20,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10
@@ -102,7 +108,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.secondary,
     alignItems: 'center',
-    marginRight: 15,
+    marginRight: 16,
     padding: 20,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10
