@@ -95,5 +95,5 @@ const ShiftScheduleScannerImage: React.FC = () => {
 
 }
 
-
 export default ShiftScheduleScannerImage;
+
