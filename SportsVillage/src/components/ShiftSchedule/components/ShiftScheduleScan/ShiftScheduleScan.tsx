@@ -2,11 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React from "react"
 import { TouchableOpacity, View } from "react-native"
 import { faCameraRetro  } from "@fortawesome/free-solid-svg-icons";
-import { COLORS } from "../../../../config";
-
+import { COLORS } from "src/config";
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import { NavigationProps } from "../../../Navigation/Navigation";
+import { NavigationProps } from "src/components/Navigation/Navigation";
 
 const ShiftScheduleScan: React.FC = () => {
 

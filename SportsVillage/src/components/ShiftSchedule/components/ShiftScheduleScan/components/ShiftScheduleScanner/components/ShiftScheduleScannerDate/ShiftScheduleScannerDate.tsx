@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Text, View } from "react-native";
 import { Calendar, DateData } from "react-native-calendars"
-import { COLORS } from "../../../../../../../../config";
+import { COLORS } from "src/config";
+
+import { styles } from "./styles";
 
 type ShiftScheduleScannerDateProps = {
   firstDay?: boolean;
@@ -43,21 +45,5 @@ const ShiftScheduleScannerDate: React.FC<ShiftScheduleScannerDateProps> = ({ fir
   )
 }
 
-const styles = StyleSheet.create({
-
-  title: {
-    color: COLORS.opposing,
-    fontSize: 24,
-    fontWeight: "bold",
-    margin: 20
-  },
-
-  calendarWrapper: {
-    backgroundColor: COLORS.secondary,
-    margin: 14,
-    borderRadius: 10,
-    padding: 10
-  }
-})
-
 export default ShiftScheduleScannerDate;
+

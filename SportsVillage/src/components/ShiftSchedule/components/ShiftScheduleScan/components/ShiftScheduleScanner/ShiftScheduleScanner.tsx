@@ -1,17 +1,18 @@
 
 import React, { useRef, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { COLORS } from "../../../../../../config";
-import SwapOut from "../../../../../animated/SwapOut";
-import ShiftScheduleScannerDate from "./components/ShiftScheduleScannerDate";
-
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { COLORS } from "src/config";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import ShiftScheduleScannerInformation from "./components/ShiftScheduleScannerInformation";
 import { useNavigation } from "@react-navigation/native";
-import { NavigationProps } from "../../../../../Navigation/Navigation";
+import { NavigationProps } from "src/components/Navigation/Navigation";
 import { DateData } from "react-native-calendars";
+import SwapOut from "src/components/animated/SwapOut";
+import ShiftScheduleScannerDate from "./components/ShiftScheduleScannerDate";
+import ShiftScheduleScannerInformation from "./components/ShiftScheduleScannerInformation";
 import ShiftScheduleScannerImage from "./components/ShiftScheduleScannerImage";
+
+import { styles } from "./styles";
 
 const ShiftScheduleScanner: React.FC = () => {
 
@@ -74,26 +75,5 @@ const ShiftScheduleScanner: React.FC = () => {
   );
 };
 
-
-const styles = StyleSheet.create({
-
-  scannerPage: {
-    backgroundColor: COLORS.background,
-    flex: 1
-  },
-
-  backButton: {
-    margin: 20
-  },
-
-  nextButton: {
-    backgroundColor: COLORS.primary,
-    padding: 20,
-    margin: 16,
-    borderRadius: 10,
-    alignItems: "center"
-  }
-
-})
-
 export default ShiftScheduleScanner;
+

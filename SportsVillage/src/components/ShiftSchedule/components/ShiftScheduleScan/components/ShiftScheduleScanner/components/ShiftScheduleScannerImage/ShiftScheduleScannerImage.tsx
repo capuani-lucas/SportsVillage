@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, Image, TouchableOpacity, View } from "react-native"
+import { faCamera, faImage } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { COLORS } from "src/config";
+import VerticalSpacer from "src/components/common/VerticalSpacer";
 import ImagePicker from 'react-native-image-crop-picker';
 
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { faImage  } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { COLORS } from "../../../../../../../../config";
-import VerticalSpacer from "../../../../../../../common/VerticalSpacer";
+import { styles } from "./styles";
 
 const ShiftScheduleScannerImage: React.FC = () => {
 
@@ -46,7 +46,7 @@ const ShiftScheduleScannerImage: React.FC = () => {
   const chooseImagePicker = (choice: string) => {
     return choice === "camera" ? ImagePicker.openCamera : ImagePicker.openPicker;
   }
-  const openImagePicker = (choice: string) => {
+  const openImagePicker = (choice: "camera" | "gallery") => {
     chooseImagePicker(choice)({
       forceJpg: true,
       mediaType: 'photo'
@@ -66,17 +66,27 @@ const ShiftScheduleScannerImage: React.FC = () => {
     <View style={{flex: 1}}>
       <View style={[styles.imageContainer, {width: windowWidth, height: windowWidth}]}>
         {imagePath ? (
-          <Image source={{uri: `file://${imagePath}`}} style={{width: windowWidth, height: windowWidth}} resizeMode="contain"/>
+          <Image 
+            source={{uri: `file://${imagePath}`}} 
+            style={{width: windowWidth, height: windowWidth}} 
+            resizeMode="contain"/
+          >
         ) : (
           <FontAwesomeIcon icon={faCamera} color={COLORS.background} size={30}/>
         )}
       </View>
       <VerticalSpacer  />
       <View style={styles.imageSelectors}>
-        <TouchableOpacity onPress={() => openImagePicker("camera")} style={styles.cameraPicker}>
+        <TouchableOpacity 
+          onPress={() => openImagePicker("camera")} 
+          style={styles.cameraPicker}
+        >
           <FontAwesomeIcon icon={faCamera} color={COLORS.opposing} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => openImagePicker("gallery")} style={styles.imagePicker}>
+        <TouchableOpacity 
+          onPress={() => openImagePicker("gallery")} 
+          style={styles.imagePicker}
+        >
           <FontAwesomeIcon icon={faImage} color={COLORS.opposing} />
         </TouchableOpacity>
       </View>
@@ -85,39 +95,5 @@ const ShiftScheduleScannerImage: React.FC = () => {
 
 }
 
-const styles = StyleSheet.create({
-
-  imageContainer: {
-    backgroundColor: COLORS.secondary,
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  cameraPicker: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: COLORS.primary,
-    marginLeft: 16,
-    padding: 20,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10
-  },
-
-  imagePicker: {
-    flex: 1,
-    backgroundColor: COLORS.secondary,
-    alignItems: 'center',
-    marginRight: 16,
-    padding: 20,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10
-  },
-
-  imageSelectors: {
-    flexDirection: 'row',
-  }
-
-});
 
 export default ShiftScheduleScannerImage;

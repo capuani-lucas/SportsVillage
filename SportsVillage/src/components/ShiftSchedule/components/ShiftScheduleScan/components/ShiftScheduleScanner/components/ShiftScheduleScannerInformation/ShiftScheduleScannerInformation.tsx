@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View } from "react-native"
-import { COLORS } from "../../../../../../../../config";
-
+import React from "react";
+import { Text, View } from "react-native";
+import { COLORS } from "src/config";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+
+import { styles } from "./styles";
 
 const ShiftScheduleScannerInformation: React.FC = () => {
   return (
@@ -17,27 +19,5 @@ const ShiftScheduleScannerInformation: React.FC = () => {
   )
 }
 
-const styles = StyleSheet.create({
-  informationContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: COLORS.error,
-    margin: 20
-  },
-
-  warningDescription: {
-    fontSize: 16,
-    color: COLORS.opposing,
-    margin: 20
-  },
-
-  warningSymbol: {
-    margin: 40
-  }
-});
-
 export default ShiftScheduleScannerInformation;
+
