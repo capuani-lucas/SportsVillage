@@ -1,7 +1,7 @@
 
 import BottomSheet from "@gorhom/bottom-sheet";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Keyboard } from "react-native";
+import { Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Keyboard, Alert } from "react-native";
 import { ShiftEdit } from "../../types";
 import useEditScheduleShift from "./hooks/useEditScheduleShift";
 import { styles } from "./styles";
@@ -28,8 +28,23 @@ const ShiftScheduleEdit: React.FC<INProps> = ({ editing, setEditing, user }) => 
     editSheetRef.current?.close();
   }, []);
 
+  const alertNoUser = () => {
+    Alert.alert(
+      "Username not set",
+      "Please go to settings and set a username. Or you may use the schedule scanner.",
+      [
+        { text: "OK", onPress: () => handleClose() }
+      ],
+      { cancelable: false }
+    );
+  }
+
   const handleChange = (index: number) => {
     if (index === -1) {
+      if (editing && !user && (textValue || notesValue)) {
+        alertNoUser();
+        return;
+      }
       editing && addEditShift(editing.date, user, textValue, notesValue);
       handleClose();
     }

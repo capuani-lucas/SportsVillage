@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useUserPreferences from '../common/hooks/useUserPreferences';
 import ShiftScheduleCalendar from './components/ShiftScheduleCalendar';
 import ShiftScheduleEdit from './components/ShiftScheduleEdit';
 import ShiftScheduleQuickInfo from './components/ShiftScheduleQuickInfo';
@@ -17,8 +18,9 @@ import { ShiftEdit } from './types';
 const ShiftSchedule: React.FC = () => {
 
   const [selectedDate, setSelectedDate] = useState<DateData>(getCurrentDateData());
-  const { scheduleInformation, loading } = useScheduleInformation();
   const [editing, setEditing] = useState<ShiftEdit>();
+  const { userPreferences, loading: preferencesLoading, error } = useUserPreferences();
+  const { scheduleInformation, loading: scheduleLoading } = useScheduleInformation();
 
   return (
     <View style={styles.shiftSchedule}>
@@ -27,14 +29,14 @@ const ShiftSchedule: React.FC = () => {
       <ShiftScheduleQuickInfo 
           selectedDate={selectedDate} 
           scheduleInformation={scheduleInformation} 
-          user={"Lucas"}
+          user={userPreferences.name}
       />
       <ScrollView>
         <ShiftScheduleCalendar 
           selectedDate={selectedDate} 
           setSelectedDate={setSelectedDate} 
           scheduleInformation={scheduleInformation} 
-          user={"Lucas"}
+          user={userPreferences.name}
           setEditing={setEditing}
         />
         <ShiftScheduleWorking 
@@ -46,7 +48,7 @@ const ShiftSchedule: React.FC = () => {
       <ShiftScheduleEdit 
         editing={editing} 
         setEditing={setEditing}
-        user={"Lucas"}
+        user={userPreferences.name}
       />
     </View>
   );

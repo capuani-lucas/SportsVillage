@@ -26,7 +26,7 @@ const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
   }, []);
 
   const handlePress = (name: string) => {
-    scheduleScanner.methods.updateUserPreferences({ ...scheduleScanner.userPreferences, name });
+    scheduleScanner.methods.updateUserPreferences({ ...scheduleScanner.userPreferences, name: name.replace(/\./g, '_').trim()});
     scheduleScanner.methods.increaseCompletedSteps();
   }
 

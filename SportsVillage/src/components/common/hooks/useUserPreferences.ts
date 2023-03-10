@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import firestore from '@react-native-firebase/firestore';
 import auth from "@react-native-firebase/auth";
@@ -19,8 +19,11 @@ const useUserPreferences = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    fetchUserPreferences();
+  }, []);
+
   const fetchUserPreferences = () => {
-    // setLoading(true);
     firestore()
       .collection('UserData')
       .doc(auth().currentUser?.uid)

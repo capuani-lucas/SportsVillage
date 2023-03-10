@@ -54,7 +54,9 @@ const ShiftScheduleScanner: React.FC = () => {
           style={[styles.nextButton, {backgroundColor: nextDisabled ? COLORS.secondary : COLORS.primary}]}
           disabled={nextDisabled}
         >
-          <Text style={{ color: nextDisabled ? COLORS.background : COLORS.opposing }}>Next</Text>
+          <Text style={{ color: nextDisabled ? COLORS.background : COLORS.opposing }}>
+            {scheduleScanner.currentIndex === components.length - 1 ? "Done" : "Next"}
+          </Text>
         </TouchableOpacity>
       </SafeAreaView>
     </View>

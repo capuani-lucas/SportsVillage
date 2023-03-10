@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { DateData } from "react-native-calendars";
 import useUserPreferences from "src/components/common/hooks/useUserPreferences";
 import { NavigationProps } from "src/components/Navigation/Navigation";
-import useEditScheduleShift from "src/components/ShiftSchedule/components/ShiftScheduleEdit/hooks/useEditScheduleShift";
 import { ImageData, ScheduleScanner } from "../types";
+import useBulkUpdateShifts from "./useBulkUpdateShifts";
 import useFetchScheduleData from "./useFetchScheduleData";
 
 
@@ -35,12 +35,15 @@ const useScheduleScanner = (): ScheduleScanner => {
     error: preferencesError 
   } = useUserPreferences();
 
-  const error = scheduleError || preferencesError;
+  const { 
+    bulkUpdateShifts, 
+    loading: 
+    bulkUpdateLoading, 
+    error: bulkUpdateError 
+  } = useBulkUpdateShifts();
 
-  
-  useEffect(() => {
-    fetchUserPreferences();
-  }, [])
+  const loading = scheduleLoading || preferencesLoading || bulkUpdateLoading;
+  const error = scheduleError || preferencesError || bulkUpdateError;
 
   const handleClick = (goBack: boolean) => {
 
@@ -54,8 +57,12 @@ const useScheduleScanner = (): ScheduleScanner => {
 
     // 6 components in the scanner
     if (currentIndex === 6 - 1) {
-
-
+      bulkUpdateShifts(
+        firstSelectedDate!, 
+        secondSelectedDate!, 
+        scheduleData, 
+        userPreferences.scheduleOffset
+      ).then(() => navigation.goBack());
       return;
     }
     
@@ -91,7 +98,7 @@ const useScheduleScanner = (): ScheduleScanner => {
     imageData, 
     scheduleData, 
     userPreferences,
-    loading: scheduleLoading || preferencesLoading, 
+    loading, 
     error,
     ref, 
     methods 

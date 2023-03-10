@@ -14,14 +14,14 @@ interface INProps {
 const ShiftScheduleWorking: React.FC<INProps> = ({ scheduleInformation, selectedDate }) => {
   const scheduleNames = Object.keys(scheduleInformation[selectedDate?.dateString]?.shifts || {});
   return (
-    <View>
+    <View style={styles.shiftWorking}>
       {
         scheduleNames.map((name, index) => {
           const shift = scheduleInformation[selectedDate?.dateString]?.shifts[name];
-          return (
+          return shift && (
             <DropFadeIn key={index} delay={0} animationDuration={300} updateOnReRender>
               <View style={styles.shift}>
-                <Text style={styles.text}>{name}</Text>
+                <Text style={styles.text}>{name.replace(/\_/g, '.')}</Text>
                 <Text style={styles.text}>{shift}</Text>
               </View>
             </DropFadeIn>

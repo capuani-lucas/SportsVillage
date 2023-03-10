@@ -23,7 +23,7 @@ export const makeRequest = (imageData: ImageData) => {
 
 export const getAllShiftsForIndex = (shifts: ShiftScheduleResponse, index: number): Shifts => {
   return shifts.reduce((acc: Shifts, row: string[]) => {
-    acc[row[0]] = row[index + 1];
+    acc[row[0].replace(/\./g, '_').trim()] = row[index + 1];
     return acc;
   }, {})
 }

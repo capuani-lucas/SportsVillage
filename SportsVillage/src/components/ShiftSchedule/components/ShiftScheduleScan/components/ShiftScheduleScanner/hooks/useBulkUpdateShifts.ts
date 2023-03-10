@@ -4,11 +4,16 @@ import { createDateAtMidnight, generateDateStringsBetweenDates } from "src/compo
 import { DateData } from 'react-native-calendars';
 import { ShiftScheduleResponse } from '../types';
 import { getAllShiftsForIndex } from '../service/shiftScheduleScanner';
+import { useState } from 'react';
 
 const useBulkUpdateShifts = () => {
 
-    const bulkUpdateShifts = (startDate: DateData, endDate: DateData, scheduleData: ShiftScheduleResponse, rowOffset: number) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
+  const bulkUpdateShifts = (startDate: DateData, endDate: DateData, scheduleData: ShiftScheduleResponse, rowOffset: number) => {
+
+    setLoading(true);
     const shifts = scheduleData.slice(rowOffset, scheduleData.length);
 
     const batch = firestore().batch();
@@ -28,7 +33,18 @@ const useBulkUpdateShifts = () => {
     });
 
     return batch.commit()
+      .then(() => {
+        setLoading(false);
+        setError(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(true);
+        console.log("Error bulk creating shifts: ", err);
+      });
   }
+
+  return { bulkUpdateShifts, loading, error };
 }
 
 export default useBulkUpdateShifts;
