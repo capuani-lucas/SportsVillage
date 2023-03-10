@@ -10,6 +10,7 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import ShiftSchedule from "../../../ShiftSchedule";
+import Settings from "src/components/Settings";
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator: React.FC = () => {
@@ -40,7 +41,7 @@ const BottomTabNavigator: React.FC = () => {
       />
       <Tab.Screen 
         name="Settings" 
-        component={TestComponent} 
+        component={Settings} 
         options={{tabBarIcon: ({focused}) => <FontAwesomeIcon icon={faCog} color={getFocusedColor(focused)}/>}} 
       />
     </Tab.Navigator>

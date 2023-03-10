@@ -14,5 +14,10 @@ export const styles = StyleSheet.create({
 
   text: {
     color: COLORS.opposing,
+  },
+
+  shiftWorking: {
+    marginBottom: 80
   }
 });
+

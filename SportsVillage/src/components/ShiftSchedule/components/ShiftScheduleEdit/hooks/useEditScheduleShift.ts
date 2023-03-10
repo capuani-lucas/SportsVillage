@@ -1,10 +1,11 @@
 
 import firestore from '@react-native-firebase/firestore';
 import auth from "@react-native-firebase/auth";
-import { createDateAtMidnight } from '../../../service/shiftScheduleService';
+import { createDateAtMidnight } from 'src/components/common/service/date';
 const useEditScheduleShift = () => {
 
   const addEditShift = (date: string, user: string, newShift: string, notes: string) => {
+    user = user.replace(/\./g, '_').trim();
     return firestore()
       .collection('UserData')
       .doc(auth().currentUser?.uid)
@@ -39,7 +40,7 @@ const useEditScheduleShift = () => {
       .get();
     if (scheduleDay.exists) {
       const shifts = scheduleDay.data()?.shifts;
-      delete shifts[user];
+      delete shifts[user.replace(/\./g, '_')];
       return firestore()
         .collection('UserData')
         .doc(auth().currentUser?.uid)

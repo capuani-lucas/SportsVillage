@@ -55,6 +55,12 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You may upload an image from your photo gallery to be scanned for schedule data</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You may use the camera to take an image to be scanned for schedule data</string>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

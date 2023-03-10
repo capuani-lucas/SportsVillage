@@ -13,3 +13,6 @@ export const COLORS = {
   opposing: "white",
   error: "red"
 }
+
+export const BACKEND_URL = __DEV__ ? "http://192.168.2.119:3000" : "tbd";
+
