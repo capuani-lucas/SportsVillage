@@ -31,13 +31,11 @@ const useUserPreferences = () => {
       .doc("data")
       .onSnapshot((documentSnapshot) => {
         if (documentSnapshot.exists) {
-
           //Replace underscores with periods
           const override: UserPreferences = {
             ...documentSnapshot.data() as UserPreferences,
             name: documentSnapshot.data()?.name.replace(/_/g, '.')
           }
-          console.log(override)
           setUserPreferences(override);
         }
         setLoading(false);
