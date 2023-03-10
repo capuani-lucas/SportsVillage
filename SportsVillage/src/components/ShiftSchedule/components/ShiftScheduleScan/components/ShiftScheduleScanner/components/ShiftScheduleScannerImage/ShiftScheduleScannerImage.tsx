@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Alert, Dimensions, Image, Linking, TouchableOpacity, View } from "react-native"
 import { faCamera, faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -7,15 +6,13 @@ import VerticalSpacer from "src/components/common/VerticalSpacer";
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { styles } from "./styles";
-import { ImageData } from "../../types";
+import { ScheduleScanner } from "../../types";
 
 type ShiftScheduleScannerImageProps = {
-  setImageData: (imageData: ImageData) => void;
-  completeStep: () => void;
-  imageData: ImageData;
+  scheduleScanner: ScheduleScanner;
 }
 
-const ShiftScheduleScannerImage: React.FC<ShiftScheduleScannerImageProps> = ({ setImageData, completeStep, imageData }) => {
+const ShiftScheduleScannerImage: React.FC<ShiftScheduleScannerImageProps> = ({ scheduleScanner }) => {
 
   const windowWidth = Dimensions.get('window').width;
 
@@ -41,14 +38,14 @@ const ShiftScheduleScannerImage: React.FC<ShiftScheduleScannerImageProps> = ({ s
       mediaType: 'photo'
     })
     .then(image => {
-      setImageData(
+      scheduleScanner.methods.setImageData(
         {
           uri: `file://${image.path}`,
           type: image.mime,
           name: image.filename || ""
         }
       )
-      completeStep();
+      scheduleScanner.methods.increaseCompletedSteps();
     })
     .catch((err: string) => {
       if (err == "Error: User did not grant camera permission.") {
@@ -65,9 +62,9 @@ const ShiftScheduleScannerImage: React.FC<ShiftScheduleScannerImageProps> = ({ s
   return (
     <View style={{flex: 1}}>
       <View style={[styles.imageContainer, {width: windowWidth, height: windowWidth}]}>
-        {imageData.uri ? (
+        {scheduleScanner.imageData.uri ? (
           <Image 
-            source={{uri: imageData.uri}} 
+            source={{uri: scheduleScanner.imageData.uri}} 
             style={{width: windowWidth, height: windowWidth}} 
             resizeMode="contain"
           />

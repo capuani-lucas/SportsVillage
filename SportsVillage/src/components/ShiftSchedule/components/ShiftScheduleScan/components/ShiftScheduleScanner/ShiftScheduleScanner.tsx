@@ -13,76 +13,44 @@ import useScheduleScanner from "./hooks/useScheduleScanner";
 
 import { styles } from "./styles";
 import ShiftScheduleScannerName from "./components/ShiftScheduleScannerName";
+import ShiftScheduleScannerShifts from "./components/ShiftScheduleScannerShifts";
 
 const ShiftScheduleScanner: React.FC = () => {
 
-  const {     
-    completedSteps, 
-    currentIndex, 
-    firstSelectedDate, 
-    secondSelectedDate, 
-    imageData, 
-    scheduleData, 
-    loading, 
-    userPreferences,
-    error, 
-    ref, 
-    methods 
-  } = useScheduleScanner();
+  const scheduleScanner = useScheduleScanner();
 
   const components = [
     <ShiftScheduleScannerInformation />,
-    <ShiftScheduleScannerDate 
-      firstDay 
-      completeStep={methods.increaseCompletedSteps}
-      selectedDate={firstSelectedDate}
-      setSelectedDate={methods.setFirstSelectedDate}
-    />,
-    <ShiftScheduleScannerDate 
-      completeStep={methods.increaseCompletedSteps}
-      firstSelectedDate={firstSelectedDate}
-      selectedDate={secondSelectedDate}
-      setSelectedDate={methods.setSecondSelectedDate}
-    />,
-    <ShiftScheduleScannerImage 
-      completeStep={methods.increaseCompletedSteps}
-      imageData={imageData}
-      setImageData={methods.setImageData}
-    />,
-    <ShiftScheduleScannerName 
-      parseSchedule={methods.parseSchedule}
-      scheduleData={scheduleData}
-      userPreferences={userPreferences}
-      updateUserPreferences={methods.updateUserPreferences}
-      error={error}
-      completeStep={methods.increaseCompletedSteps}
-    />,
-    
+    <ShiftScheduleScannerDate scheduleScanner={scheduleScanner} firstDay />,
+    <ShiftScheduleScannerDate scheduleScanner={scheduleScanner} />,
+    <ShiftScheduleScannerImage scheduleScanner={scheduleScanner} />,
+    <ShiftScheduleScannerName scheduleScanner={scheduleScanner} />,
+    <ShiftScheduleScannerShifts scheduleScanner={scheduleScanner} />
   ]
 
-  const nextDisabled = completedSteps < currentIndex + 1;
+  const nextDisabled = scheduleScanner.completedSteps < scheduleScanner.currentIndex + 1;
   return (
     <View style={styles.scannerPage}>
       <SafeAreaView style={{flex: 1}}>
-        <TouchableOpacity onPress={() => methods.handleClick(true)} style={styles.backButton}>
+        <TouchableOpacity onPress={() => scheduleScanner.methods.handleClick(true)} style={styles.backButton}>
           <FontAwesomeIcon icon={faArrowLeft} color={COLORS.opposing}/>
         </TouchableOpacity>
-        {error && (
+        {scheduleScanner.error && (
           <View style={styles.errorBanner}>
             <Text style={styles.errorMessage}>An error has occurred. Please go back and try again.</Text>
           </View>
         )}
-        {loading ? (
+        {scheduleScanner.loading ? (
           <ActivityIndicator size="large" color={COLORS.primary} style={styles.loadingSpinner} />
         ) : (
           <SwapOut 
-            startIndex={currentIndex}
+            startIndex={scheduleScanner.currentIndex}
             components={components}
-            ref={ref}
+            ref={scheduleScanner.ref}
           />
         )}
         <TouchableOpacity 
-          onPress={() => methods.handleClick(false)} 
+          onPress={() => scheduleScanner.methods.handleClick(false)} 
           style={[styles.nextButton, {backgroundColor: nextDisabled ? COLORS.secondary : COLORS.primary}]}
           disabled={nextDisabled}
         >

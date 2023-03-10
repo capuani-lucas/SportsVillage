@@ -25,7 +25,7 @@ const useFetchScheduleData = () => {
       });
   }
 
-  return { fetchScheduleData, scheduleData, loading, error };
+  return { fetchScheduleData, scheduleData, loading, error, setScheduleData };
 
 }
 

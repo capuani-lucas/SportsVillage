@@ -1,19 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DateData } from "react-native-calendars";
 import useUserPreferences from "src/components/common/hooks/useUserPreferences";
 import { NavigationProps } from "src/components/Navigation/Navigation";
-import { ImageData } from "../types";
+import useEditScheduleShift from "src/components/ShiftSchedule/components/ShiftScheduleEdit/hooks/useEditScheduleShift";
+import { ImageData, ScheduleScanner } from "../types";
 import useFetchScheduleData from "./useFetchScheduleData";
 
-const useScheduleScanner = () => {
+
+const useScheduleScanner = (): ScheduleScanner => {
 
   const [completedSteps, setCompletedSteps] = useState(1);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [firstSelectedDate, setFirstSelectedDate] = useState<DateData>();
   const [secondSelectedDate, setSecondSelectedDate] = useState<DateData>();
   const [imageData, setImageData] = useState<ImageData>({uri: '', type: '', name: ''});
-  
+
   const navigation = useNavigation<NavigationProps>();
   const ref = useRef<any>(null);
 
@@ -21,7 +23,8 @@ const useScheduleScanner = () => {
     fetchScheduleData, 
     scheduleData, 
     loading: scheduleLoading, 
-    error: scheduleError 
+    error: scheduleError,
+    setScheduleData
   } = useFetchScheduleData();
 
   const { 
@@ -31,6 +34,9 @@ const useScheduleScanner = () => {
     loading: preferencesLoading, 
     error: preferencesError 
   } = useUserPreferences();
+
+  const error = scheduleError || preferencesError;
+
   
   useEffect(() => {
     fetchUserPreferences();
@@ -45,6 +51,14 @@ const useScheduleScanner = () => {
 
     if (currentIndex === 0 && goBack || (scheduleError || preferencesError) && goBack)
       return navigation.goBack();
+
+    // 6 components in the scanner
+    if (currentIndex === 6 - 1) {
+
+
+      return;
+    }
+    
     setCurrentIndex(currentIndex + (goBack ? -1 : 1));
     ref.current && ref.current.animateOut(goBack);
   }
@@ -65,7 +79,8 @@ const useScheduleScanner = () => {
     increaseCompletedSteps,
     fetchUserPreferences,
     updateUserPreferences,
-    parseSchedule
+    parseSchedule,
+    setScheduleData
   }
 
   return { 
@@ -77,7 +92,7 @@ const useScheduleScanner = () => {
     scheduleData, 
     userPreferences,
     loading: scheduleLoading || preferencesLoading, 
-    error: scheduleError || preferencesError,
+    error,
     ref, 
     methods 
   };

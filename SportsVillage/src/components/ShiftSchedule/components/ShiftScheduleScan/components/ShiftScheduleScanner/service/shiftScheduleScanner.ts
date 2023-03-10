@@ -1,5 +1,6 @@
-import { ImageData } from "../types";
+import { ImageData, ShiftScheduleResponse } from "../types";
 import { BACKEND_URL } from "src/config";
+import { Shifts } from "src/components/ShiftSchedule/types";
   
 const createFormData = (imageData: ImageData, body: any) => {
   const data = new FormData();
@@ -20,3 +21,9 @@ export const makeRequest = (imageData: ImageData) => {
   });
 }
 
+export const getAllShiftsForIndex = (shifts: ShiftScheduleResponse, index: number): Shifts => {
+  return shifts.reduce((acc: Shifts, row: string[]) => {
+    acc[row[0]] = row[index + 1];
+    return acc;
+  }, {})
+}

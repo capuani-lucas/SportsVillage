@@ -2,37 +2,32 @@ import React, { useState } from "react"
 import { useEffect } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { UserPreferences } from "src/components/common/hooks/useUserPreferences";
-import { ShiftScheduleResponse } from "../../types";
+import { ScheduleScanner, ShiftScheduleResponse } from "../../types";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { COLORS } from "src/config";
 
 type ShiftScheduleScannerNameProps = {
-  parseSchedule(): void;
-  scheduleData: ShiftScheduleResponse;
-  userPreferences: UserPreferences;
-  error: boolean;
-  updateUserPreferences: (userPreferences: UserPreferences) => void;
-  completeStep: () => void;
+  scheduleScanner: ScheduleScanner;
 }
 
 const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
-  { parseSchedule, scheduleData, userPreferences, error, updateUserPreferences, completeStep }
+  { scheduleScanner }
   ) => {
 
-  const names = scheduleData
-                  .slice(userPreferences.scheduleOffset, scheduleData.length)
+  const names = scheduleScanner.scheduleData
+                  .slice(scheduleScanner.userPreferences.scheduleOffset, scheduleScanner.scheduleData.length)
                   .map(row => row[0]);
 
   useEffect(() => {
     // We want to parse the schedule as soon as the component is mounted
-    !scheduleData.length && !error && parseSchedule();
-    names.length && userPreferences.name && completeStep();
+    !scheduleScanner.scheduleData.length && !scheduleScanner.error && scheduleScanner.methods.parseSchedule();
+    names.length && scheduleScanner.userPreferences.name && scheduleScanner.methods.increaseCompletedSteps();
   }, []);
 
   const handlePress = (name: string) => {
-    updateUserPreferences({ ...userPreferences, name });
-    completeStep();
+    scheduleScanner.methods.updateUserPreferences({ ...scheduleScanner.userPreferences, name });
+    scheduleScanner.methods.increaseCompletedSteps();
   }
 
   return (
@@ -42,12 +37,12 @@ const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
         {names.length ? (
           names.map(name => (
           <TouchableOpacity 
-            style={[styles.nameContainer, {borderColor: userPreferences.name.trim() === name.trim() ? COLORS.primary : "transparent"}]} 
+            style={[styles.nameContainer, {borderColor: scheduleScanner.userPreferences.name.trim() === name.trim() ? COLORS.primary : "transparent"}]} 
             onPress={() => handlePress(name)}
             key={name}
           >
             <Text style={styles.nameText}>{name}</Text>
-            {userPreferences.name.trim() === name.trim() && <FontAwesomeIcon icon={faCheck} color={COLORS.primary} />}
+            {scheduleScanner.userPreferences.name.trim() === name.trim() && <FontAwesomeIcon icon={faCheck} color={COLORS.primary} />}
           </TouchableOpacity>
         ))
         ) : (

@@ -16,9 +16,11 @@ export type ScheduleInformation = {
 export type ScheduleDayInformation = {
   date: FirestoreTimestamp;
   notes: string;
-  shifts: {
-    [name: string]: string
-  }
+  shifts: Shifts
+}
+
+export type Shifts = {
+  [name: string]: string
 }
 
 export type ShiftEdit = {

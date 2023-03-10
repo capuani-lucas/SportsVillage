@@ -1,7 +1,7 @@
 
 import firestore from '@react-native-firebase/firestore';
 import auth from "@react-native-firebase/auth";
-import { createDateAtMidnight } from '../../../service/shiftScheduleService';
+import { createDateAtMidnight } from 'src/components/common/service/date';
 const useEditScheduleShift = () => {
 
   const addEditShift = (date: string, user: string, newShift: string, notes: string) => {

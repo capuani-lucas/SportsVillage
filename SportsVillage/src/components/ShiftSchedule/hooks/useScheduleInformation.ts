@@ -17,7 +17,7 @@ export const useScheduleInformation = () => {
       .doc(auth().currentUser?.uid)
       .collection("ScheduleDays")
       .orderBy("date", "desc")
-      .limit(30)
+      .limit(90)
       .onSnapshot(querySnapshot => {
         if (!querySnapshot) {
           setLoading(false);

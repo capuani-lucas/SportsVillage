@@ -2,28 +2,30 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Calendar, DateData } from "react-native-calendars"
 import { COLORS } from "src/config";
+import { ScheduleScanner } from "../../types";
 
 import { styles } from "./styles";
 
 type ShiftScheduleScannerDateProps = {
+  scheduleScanner: ScheduleScanner;
   firstDay?: boolean;
-  completeStep: () => void;
-  selectedDate?: DateData;
-  setSelectedDate: (dateData: DateData) => void;
-  firstSelectedDate?: DateData;
 }
 
 
-const ShiftScheduleScannerDate: React.FC<ShiftScheduleScannerDateProps> = ({ firstDay, completeStep, selectedDate, setSelectedDate, firstSelectedDate }) => {
+const ShiftScheduleScannerDate: React.FC<ShiftScheduleScannerDateProps> = ({ scheduleScanner, firstDay }) => {
+
+
+  const selectedDate = firstDay ? scheduleScanner.firstSelectedDate : scheduleScanner.secondSelectedDate;
+  const setSelectedDate = firstDay ? scheduleScanner.methods.setFirstSelectedDate : scheduleScanner.methods.setSecondSelectedDate;
 
   return (
     <View>
       <Text style={styles.title}>{firstDay ? "First day of schedule?": "Last day of schedule?"}</Text>
       <View style={styles.calendarWrapper}>
         <Calendar 
-          minDate={firstSelectedDate?.dateString}
+          minDate={!firstDay ? scheduleScanner.firstSelectedDate?.dateString : ""}
           onDayPress={(date: DateData) => {
-            completeStep();
+            scheduleScanner.methods.increaseCompletedSteps();
             setSelectedDate(date);
           }}
           markedDates={{
