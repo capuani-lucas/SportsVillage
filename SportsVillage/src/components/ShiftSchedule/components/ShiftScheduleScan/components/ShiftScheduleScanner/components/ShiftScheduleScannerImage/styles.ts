@@ -22,12 +22,13 @@ export const styles = StyleSheet.create({
 
   imagePicker: {
     flex: 1,
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
-    marginRight: 16,
+    marginHorizontal: 16,
     padding: 20,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10
+    // borderTopRightRadius: 10,
+    // borderBottomRightRadius: 10
+    borderRadius: 10
   },
 
   imageSelectors: {

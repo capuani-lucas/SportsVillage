@@ -5,6 +5,7 @@ import { createDateAtMidnight } from 'src/components/common/service/date';
 const useEditScheduleShift = () => {
 
   const addEditShift = (date: string, user: string, newShift: string, notes: string) => {
+    user = user.replace(/\./g, '_').trim();
     return firestore()
       .collection('UserData')
       .doc(auth().currentUser?.uid)

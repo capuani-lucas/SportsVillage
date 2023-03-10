@@ -74,12 +74,13 @@ const ShiftScheduleScannerImage: React.FC<ShiftScheduleScannerImageProps> = ({ s
       </View>
       <VerticalSpacer  />
       <View style={styles.imageSelectors}>
-        <TouchableOpacity 
+        {/* Disable camera for now. Not processing correctly */}
+        {/* <TouchableOpacity 
           onPress={() => openImagePicker("camera")} 
           style={styles.cameraPicker}
         >
           <FontAwesomeIcon icon={faCamera} color={COLORS.opposing} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity 
           onPress={() => openImagePicker("gallery")} 
           style={styles.imagePicker}

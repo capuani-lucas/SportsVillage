@@ -30,7 +30,7 @@ const useUserPreferences = () => {
       .collection("UserPreferences")
       .doc("data")
       .onSnapshot((documentSnapshot) => {
-        if (documentSnapshot.exists) {
+        if (documentSnapshot && documentSnapshot.exists) {
           //Replace underscores with periods
           const override: UserPreferences = {
             ...documentSnapshot.data() as UserPreferences,
