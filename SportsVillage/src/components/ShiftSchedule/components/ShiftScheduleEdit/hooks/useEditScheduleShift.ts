@@ -39,7 +39,7 @@ const useEditScheduleShift = () => {
       .get();
     if (scheduleDay.exists) {
       const shifts = scheduleDay.data()?.shifts;
-      delete shifts[user];
+      delete shifts[user.replace(/\./g, '_')];
       return firestore()
         .collection('UserData')
         .doc(auth().currentUser?.uid)

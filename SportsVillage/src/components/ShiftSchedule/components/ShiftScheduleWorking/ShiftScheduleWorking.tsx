@@ -21,7 +21,7 @@ const ShiftScheduleWorking: React.FC<INProps> = ({ scheduleInformation, selected
           return shift && (
             <DropFadeIn key={index} delay={0} animationDuration={300} updateOnReRender>
               <View style={styles.shift}>
-                <Text style={styles.text}>{name.replace(/\_/g, '.')}</Text>
+                <Text style={styles.text}>{name}</Text>
                 <Text style={styles.text}>{shift}</Text>
               </View>
             </DropFadeIn>

@@ -31,7 +31,14 @@ const useUserPreferences = () => {
       .doc("data")
       .onSnapshot((documentSnapshot) => {
         if (documentSnapshot.exists) {
-          setUserPreferences(documentSnapshot.data() as UserPreferences);
+
+          //Replace underscores with periods
+          const override: UserPreferences = {
+            ...documentSnapshot.data() as UserPreferences,
+            name: documentSnapshot.data()?.name.replace(/_/g, '.')
+          }
+          console.log(override)
+          setUserPreferences(override);
         }
         setLoading(false);
         setError(false);
@@ -39,12 +46,18 @@ const useUserPreferences = () => {
   }
 
   const updateUserPreferences = (preferences: UserPreferences) => {
+
+    const override = {
+      ...preferences,
+      name: preferences.name.replace(/\./g, '_').trim()
+    }
+
     firestore()
       .collection('UserData')
       .doc(auth().currentUser?.uid)
       .collection("UserPreferences")
       .doc("data")
-      .set(preferences)
+      .set(override)
       .then((response) => {
         setLoading(false);
         setError(false);

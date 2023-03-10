@@ -26,7 +26,7 @@ const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
   }, []);
 
   const handlePress = (name: string) => {
-    scheduleScanner.methods.updateUserPreferences({ ...scheduleScanner.userPreferences, name: name.replace(/\./g, '_').trim()});
+    scheduleScanner.methods.updateUserPreferences({ ...scheduleScanner.userPreferences, name });
     scheduleScanner.methods.increaseCompletedSteps();
   }
 
@@ -37,12 +37,12 @@ const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
         {names.length ? (
           names.map(name => (
           <TouchableOpacity 
-            style={[styles.nameContainer, {borderColor: scheduleScanner.userPreferences.name.trim() === name.trim() ? COLORS.primary : "transparent"}]} 
+            style={[styles.nameContainer, {borderColor: scheduleScanner.userPreferences.name === name.trim() ? COLORS.primary : "transparent"}]} 
             onPress={() => handlePress(name)}
             key={name}
           >
             <Text style={styles.nameText}>{name}</Text>
-            {scheduleScanner.userPreferences.name.trim() === name.trim() && <FontAwesomeIcon icon={faCheck} color={COLORS.primary} />}
+            {scheduleScanner.userPreferences.name === name.trim() && <FontAwesomeIcon icon={faCheck} color={COLORS.primary} />}
           </TouchableOpacity>
         ))
         ) : (

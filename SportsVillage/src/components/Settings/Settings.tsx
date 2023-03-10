@@ -8,9 +8,11 @@ const Settings: React.FC = () => {
   const { userPreferences, updateUserPreferences } = useUserPreferences();
   useEffect(() => {
     setName(userPreferences.name);
+    setScheduleOffset(userPreferences.scheduleOffset);
   }, [userPreferences])
 
   const [name, setName] = useState("");
+  const [scheduleOffset, setScheduleOffset] = useState(0)
 
   return (
     <View style={styles.settings}>
@@ -22,6 +24,14 @@ const Settings: React.FC = () => {
         onChangeText={(text) => setName(text)}
         onEndEditing={() => updateUserPreferences({...userPreferences, name})}
         placeholder="Name"
+      />
+      <TextInput 
+        style={styles.name}
+        value={scheduleOffset.toString()}
+        onChangeText={(text) => setScheduleOffset(parseInt(text))}
+        onEndEditing={() => updateUserPreferences({...userPreferences, scheduleOffset})}
+        placeholder="Schedule Offset"
+        keyboardType="numeric"
       />
     </View>
   );

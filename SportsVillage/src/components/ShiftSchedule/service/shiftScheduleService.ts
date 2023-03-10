@@ -1,5 +1,5 @@
 import { DateData } from "react-native-calendars";
-import { FirestoreTimestamp, ScheduleDayInformation, ScheduleInformation } from "../types";
+import { FirestoreTimestamp, ScheduleDayInformation, ScheduleInformation, Shifts } from "../types";
 
 export const getCurrentDateData = (): DateData => {
     const date = new Date();
@@ -17,12 +17,21 @@ const getDateStringFromFirestoreTimestamp = (firestoreTimestamp: FirestoreTimest
   return new Date(firestoreTimestamp.seconds * 1000).toLocaleDateString("en-CA");
 }
 
+const formatShiftKeys = (shifts: Shifts) => {
+  return Object.keys(shifts).reduce((acc, shiftKey) => {
+    const shift = shifts[shiftKey];
+    const newShiftKey = shiftKey.replace(/_/g, '.');
+    acc[newShiftKey] = shift;
+    return acc;
+  }, {} as Shifts);
+}
+
 export const formatScheduleDayInformation = (scheduleData: ScheduleDayInformation[]): ScheduleInformation => {
   return scheduleData.reduce((acc, scheduleDayInformation) => {
     const dateString = getDateStringFromFirestoreTimestamp(scheduleDayInformation.date);
     acc[dateString] = {
       notes: scheduleDayInformation.notes,
-      shifts: scheduleDayInformation.shifts
+      shifts: formatShiftKeys(scheduleDayInformation.shifts)
     }
     return acc;
   }
