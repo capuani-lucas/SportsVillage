@@ -72,3 +72,4 @@ const useUserPreferences = () => {
 }
 
 export default useUserPreferences;
+

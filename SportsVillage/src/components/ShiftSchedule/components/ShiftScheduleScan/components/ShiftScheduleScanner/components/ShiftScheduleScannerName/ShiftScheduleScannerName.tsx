@@ -1,19 +1,17 @@
-import React, { useState } from "react"
+import React from "react"
 import { useEffect } from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { UserPreferences } from "src/components/common/hooks/useUserPreferences";
-import { ScheduleScanner, ShiftScheduleResponse } from "../../types";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScheduleScanner } from "../../types";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { COLORS } from "src/config";
+import { styles } from "./styles";
 
 type ShiftScheduleScannerNameProps = {
   scheduleScanner: ScheduleScanner;
 }
 
-const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
-  { scheduleScanner }
-  ) => {
+const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = ({ scheduleScanner }) => {
 
   const names = scheduleScanner.scheduleData
                   .slice(scheduleScanner.userPreferences.scheduleOffset, scheduleScanner.scheduleData.length)
@@ -37,7 +35,10 @@ const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
         {names.length ? (
           names.map(name => (
           <TouchableOpacity 
-            style={[styles.nameContainer, {borderColor: scheduleScanner.userPreferences.name === name.trim() ? COLORS.primary : "transparent"}]} 
+            style={[
+              styles.nameContainer, 
+              {borderColor: scheduleScanner.userPreferences.name === name.trim() ? COLORS.primary : "transparent"}
+            ]} 
             onPress={() => handlePress(name)}
             key={name}
           >
@@ -53,30 +54,6 @@ const ShiftScheduleScannerName: React.FC<ShiftScheduleScannerNameProps> = (
   );
 }
 
-const styles = StyleSheet.create({
-
-  title: {
-    color: COLORS.opposing,
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 15
-  },
-
-  nameContainer: {
-    flexDirection: "row",
-    padding: 12,
-    margin: 6,
-    backgroundColor: COLORS.secondary,
-    justifyContent: "space-between",
-    borderWidth: 1
-  },
-
-  nameText: {
-    color: "white",
-    fontWeight: "bold"
-  }
-
-});
 
 export default ShiftScheduleScannerName;
 

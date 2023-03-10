@@ -27,3 +27,4 @@ export const getAllShiftsForIndex = (shifts: ShiftScheduleResponse, index: numbe
     return acc;
   }, {})
 }
+

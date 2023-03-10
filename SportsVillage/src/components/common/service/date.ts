@@ -14,3 +14,4 @@ export const generateDateStringsBetweenDates = (date1: string | undefined, date2
     }
     return dateStrings;
 }
+

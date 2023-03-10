@@ -1,8 +1,9 @@
 import React from "react"
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, Text, TextInput, View } from "react-native"
 import { generateDateStringsBetweenDates } from "src/components/common/service/date";
-import { COLORS } from "src/config";
 import { ScheduleScanner } from "../../types";
+
+import { styles } from "./styles";
 
 type ShiftScheduleScannerShiftsProps = {
   scheduleScanner: ScheduleScanner;
@@ -56,34 +57,6 @@ const ShiftScheduleScannerShifts: React.FC<ShiftScheduleScannerShiftsProps> = ({
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  title: {
-    color: COLORS.opposing,
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 15
-  },
-
-  dateContainer: {
-    flexDirection: "row",
-    padding: 12,
-    margin: 6,
-    backgroundColor: COLORS.secondary,
-    justifyContent: "space-between",
-    borderWidth: 1
-  },
-
-  dateText: {
-    color: "white",
-    fontWeight: "bold"
-  },
-
-  dateInput: { 
-    color: "white"
-  }
-})
-
 
 export default ShiftScheduleScannerShifts;
 
