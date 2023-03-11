@@ -27,11 +27,11 @@ const useAppleLogin = () => {
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
 
       await auth().signInWithCredential(appleCredential);
-
-      onSuccess && onSuccess();
+      
       setIsSignedIn(true);
       setIsLoading(false);
       setIsErrored(false);
+      onSuccess && onSuccess();
 
     } catch (e) {
       console.log("Signing in with Apple failed: ", e);
