@@ -45,6 +45,7 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-SportsVillage-SportsVillageTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsVillage-SportsVillageTests.release.xcconfig"; path = "Target Support Files/Pods-SportsVillage-SportsVillageTests/Pods-SportsVillage-SportsVillageTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F83503492961FE9C007B975F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F8FC641629BCECE70000F590 /* SportsVillage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = SportsVillage.entitlements; path = SportsVillage/SportsVillage.entitlements; sourceTree = "<group>"; };
 		FD73BDC7A5E27B0145741FBA /* Pods_SportsVillage_SportsVillageTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsVillage_SportsVillageTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -88,6 +89,7 @@
 		13B07FAE1A68108700A75B9A /* SportsVillage */ = {
 			isa = PBXGroup;
 			children = (
+				F8FC641629BCECE70000F590 /* SportsVillage.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -505,6 +507,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SportsVillage/SportsVillage.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D5ZSPA43PY;
 				ENABLE_BITCODE = NO;
@@ -532,6 +535,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SportsVillage/SportsVillage.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D5ZSPA43PY;
 				INFOPLIST_FILE = SportsVillage/Info.plist;

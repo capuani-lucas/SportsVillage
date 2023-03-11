@@ -39,8 +39,14 @@ const useGoogleLogin = () => {
     })
   }
 
-  return { isLoading, isSignedIn, handleGoogleLogin, isErrored };
+  return { 
+    googleLoading: isLoading, 
+    googleSignedIn: isSignedIn, 
+    handleGoogleLogin, 
+    googleErrored: isErrored 
+  };
 
 }
 
 export default useGoogleLogin;
+
