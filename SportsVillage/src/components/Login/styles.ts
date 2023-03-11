@@ -37,6 +37,12 @@ export const styles = StyleSheet.create({
 
   loginError: {
     color: COLORS.error,
+  },
+
+  appleLoginButton: { 
+    width: 305,
+    height: 39
   }
 
 });
+

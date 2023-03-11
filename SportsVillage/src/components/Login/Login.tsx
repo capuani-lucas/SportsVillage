@@ -1,16 +1,19 @@
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { AppleButton } from '@invertase/react-native-apple-authentication';
 import React from 'react';
-import {View, Text, SafeAreaView, Image} from 'react-native';
+import {View, Text, SafeAreaView, Image, ActivityIndicator} from 'react-native';
 import useGoogleLogin from './hooks/useGoogleLogin';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from '../Navigation/Navigation';
 import { CDN_URL } from '../../config';
 import WrapHorizontal from '../animated/WrapHorizontal';
 import { styles } from "./styles";
+import useAppleLogin from './hooks/useAppleLogin';
 
 const Login: React.FC = () => {
 
-  const { isLoading, isSignedIn, handleGoogleLogin, isErrored } = useGoogleLogin();
+  const { googleLoading, googleSignedIn, handleGoogleLogin, googleErrored } = useGoogleLogin();
+  const { appleLoading, appleSignedIn, handleAppleLogin, appleErrored } = useAppleLogin();
   const navigation = useNavigation<NavigationProps>();
 
   const loggedIn = () => {
@@ -19,6 +22,9 @@ const Login: React.FC = () => {
       routes: [{ name: "Test" }]
     })
   }
+
+  const errored = googleErrored || appleErrored;
+  const loading = googleLoading || appleLoading;
 
   return (
     <View style={styles.login}>
@@ -33,18 +39,33 @@ const Login: React.FC = () => {
       </WrapHorizontal>
       <View style={styles.loginSpacer}></View>
       <View style={styles.loginOAuthContainer}>
-        {isErrored && (
+        {errored && (
           <Text style={styles.loginError}>There was an error logging in. Please try again.</Text>
         )}
-        <GoogleSigninButton 
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          disabled={isLoading}
-          onPress={() => handleGoogleLogin(loggedIn)}
-        />
+        {loading ? (
+          <ActivityIndicator 
+            size="small"
+          />
+        ) : (
+          <>
+            <AppleButton 
+              buttonStyle={AppleButton.Style.WHITE}
+              buttonType={AppleButton.Type.SIGN_IN}
+              style={styles.appleLoginButton}
+              onPress={() => handleAppleLogin(loggedIn)}
+            />
+            <GoogleSigninButton 
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              disabled={loading}
+              onPress={() => handleGoogleLogin(loggedIn)}
+            />
+          </>
+        )}
       </View>
     </View>
   );
 };
 
 export default Login;
+
