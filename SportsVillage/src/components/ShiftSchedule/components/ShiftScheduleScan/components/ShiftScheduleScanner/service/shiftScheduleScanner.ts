@@ -1,6 +1,7 @@
 import { ImageData, ShiftScheduleResponse } from "../types";
 import { BACKEND_URL } from "src/config";
 import { Shifts } from "src/components/ShiftSchedule/types";
+import auth from "@react-native-firebase/auth";
   
 const createFormData = (imageData: ImageData, body: any) => {
   const data = new FormData();
@@ -14,10 +15,14 @@ const createFormData = (imageData: ImageData, body: any) => {
   return data;
 }
 
-export const makeRequest = (imageData: ImageData) => {
+export const makeRequest = async (imageData: ImageData) => {
+  const idToken = await auth().currentUser?.getIdToken();
   return fetch(`${BACKEND_URL}/getScheduleData`, {
     method: "POST",
-    body: createFormData(imageData, {})
+    body: createFormData(imageData, {}),
+    headers: {
+      "Authorization": idToken || ''
+    }
   });
 }
 
