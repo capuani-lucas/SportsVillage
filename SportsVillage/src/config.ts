@@ -14,5 +14,7 @@ export const COLORS = {
   error: "red"
 }
 
-export const BACKEND_URL = __DEV__ ? "http://192.168.2.119:3000" : "tbd";
+// Use duckdns temporary domain for the backend
+
+export const BACKEND_URL = __DEV__ ? "http://192.168.2.119:3000" : "https://sportsvillage.duckdns.org";
 

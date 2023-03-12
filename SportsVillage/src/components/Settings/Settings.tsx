@@ -1,6 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react"
-import { SafeAreaView, Text, TextInput, View } from "react-native";
+import { Button, SafeAreaView, Text, TextInput, View } from "react-native";
 import useUserPreferences from "../common/hooks/useUserPreferences";
+import { NavigationProps } from "../Navigation/Navigation";
+import auth from "@react-native-firebase/auth";
 
 import { styles } from "./styles";
 
@@ -14,6 +17,15 @@ const Settings: React.FC = () => {
 
   const [name, setName] = useState("");
   const [scheduleOffset, setScheduleOffset] = useState(0)
+
+  const navigation = useNavigation<NavigationProps>(); 
+  const test = () => {
+    auth().signOut();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }]
+    })
+  }
 
   return (
     <View style={styles.settings}>
@@ -34,6 +46,7 @@ const Settings: React.FC = () => {
         placeholder="Schedule Offset"
         keyboardType="numeric"
       />
+      <Button title="Logout" onPress={test} />
     </View>
   );
 }

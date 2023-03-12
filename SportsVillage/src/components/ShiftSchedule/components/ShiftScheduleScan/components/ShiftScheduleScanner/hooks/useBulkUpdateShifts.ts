@@ -29,7 +29,7 @@ const useBulkUpdateShifts = () => {
         date: firestore.Timestamp.fromDate(new Date(createDateAtMidnight(date))),
         shifts: getAllShiftsForIndex(shifts, index),
         notes: ""
-      }, { merge: true })
+      }, { merge: false })
     });
 
     return batch.commit()

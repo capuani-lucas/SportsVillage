@@ -35,11 +35,6 @@ const BottomTabNavigator: React.FC = () => {
         options={{tabBarIcon: ({focused}) => <FontAwesomeIcon icon={faHouse} color={getFocusedColor(focused)}/>}} 
       />
       <Tab.Screen 
-        name="About" 
-        component={TestComponent} 
-        options={{tabBarIcon: ({focused}) => <FontAwesomeIcon icon={faBook} color={getFocusedColor(focused)}/>}} 
-      />
-      <Tab.Screen 
         name="Settings" 
         component={Settings} 
         options={{tabBarIcon: ({focused}) => <FontAwesomeIcon icon={faCog} color={getFocusedColor(focused)}/>}} 
